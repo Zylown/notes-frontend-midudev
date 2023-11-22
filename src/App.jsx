@@ -3,6 +3,7 @@ import Note from "./components/Note";
 import Notification from "./components/Notification";
 import noteService from "./services/notes/index.js";
 import loginService from "./services/login";
+import "./index.css";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -71,8 +72,9 @@ const App = () => {
     setNewNote(event.target.value);
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  /*
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
     try {
       const user = await loginService.login({
@@ -89,6 +91,24 @@ const App = () => {
       setPassword("");
     } catch (e) {
       setErrorMessage("Wrong credentials");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
+*/
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const user = await loginService.login({ username, password });
+
+      setUser(user);
+      setUsername(""); // reset username and password
+      setPassword("");
+    } catch (error) {
+      setErrorMessage("Credenciales incorrectas");
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -142,8 +162,8 @@ const App = () => {
       <h1>Notes</h1>
       <Notification message={errorMessage} />
 
-      {/* {user ? renderCreateNoteForm() : renderLoginForm()} */}
-      {user ? renderCreateNoteForm() : renderCreateNoteForm()}
+      {user ? renderCreateNoteForm() : renderLoginForm()}
+      {/* {user ? renderCreateNoteForm() : renderCreateNoteForm()} */}
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>

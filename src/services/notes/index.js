@@ -1,6 +1,6 @@
 import axios from "axios";
-const baseUrl = "https://lazy-pink-deer-ring.cyclic.app/api/notes";
-// const baseUrl = "http://localhost:3001/api/notes";
+// const baseUrl = "https://lazy-pink-deer-ring.cyclic.app/api/notes";
+const baseUrl = "http://localhost:3001/api/notes";
 
 let token = null;
 
