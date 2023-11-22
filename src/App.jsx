@@ -21,19 +21,19 @@ const App = () => {
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // check if user is logged
     const loggedUserJSON = window.localStorage.getItem("loggedNoteAppUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
-      noteService.setToken(user.token);
+      noteService.setToken(user.token); // set token to noteService
     }
   }, []);
 
   const handleLogout = () => {
     setUser(null);
     noteService.setToken(null);
-    window.localStorage.removeItem("loggedNoteAppUser");
+    window.localStorage.removeItem("loggedNoteAppUser"); // remove user from local storage
   };
 
   const addNote = (event) => {
@@ -104,6 +104,9 @@ const App = () => {
     try {
       const user = await loginService.login({ username, password });
 
+      window.localStorage.setItem("loggedNoteAppUser", JSON.stringify(user)); // save user to local storage
+
+      noteService.setToken(user.token); // set token to noteService
       setUser(user);
       setUsername(""); // reset username and password
       setPassword("");
